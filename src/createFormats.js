@@ -40,7 +40,10 @@ const civilianTimeFormats = [
       'mm',
       'm'
     ],
-    ' ',
+    [
+      '',
+      ' '
+    ],
     [
       'A',
       'a'

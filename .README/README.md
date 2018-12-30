@@ -25,6 +25,12 @@ extractTime('extracts time from anywhere within the input 14:00', 24);
 extractTime('extracts only the first time from the input 16:00, 18:00', 24);
 // 16:00
 
+extractTime('distinguish between the civilian 1:30 PM ...', 12);
+// 13:30
+
+extractTime('... and military time formats 13:30', 24);
+// 13:30
+
 ```
 
 ## Signature

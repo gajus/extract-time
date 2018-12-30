@@ -11,6 +11,14 @@ h:mm a
 h:mm A
 h.mm a
 h.mm A
+hh:mma
+hh:mmA
+hh.mma
+hh.mmA
+h:mma
+h:mmA
+h.mma
+h.mmA
 hh:m a
 hh:m A
 hh.m a
@@ -19,21 +27,21 @@ h:m a
 h:m A
 h.m a
 h.m A
-hh:mm
+hh:ma
+hh:mA
+hh.ma
+hh.mA
+h:ma
+h:mA
+h.ma
+h.mA
 HH:mm
-hh.mm
 HH.mm
-h:mm
 H:mm
-h.mm
 H.mm
-hh:m
 HH:m
-hh.m
 HH.m
-h:m
 H:m
-h.m
 H.m`;
 
 test('orders formats by their specificity (resolves conflicts using localeCompare)', (t) => {
