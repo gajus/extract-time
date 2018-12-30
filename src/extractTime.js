@@ -15,6 +15,10 @@ const log = Logger.child({
 });
 
 export default (subject: string, timeFormat: TimeFormatType): string | null => {
+  if (timeFormat !== 12 && timeFormat !== 24) {
+    throw new Error('Unexpected time format value. Must be 12 or 24.');
+  }
+
   log.debug('attempting to extract date from "%s" input using %d time format', subject, timeFormat);
 
   const formats = createFormats();
