@@ -28,16 +28,16 @@ Extracts time from an arbitrary text input.
 import extractTime from 'extract-time';
 
 extractTime('extracts time from anywhere within the input 14:00', 24);
-// 14:00
+// [{time: '14:00'}]
 
-extractTime('extracts only the first time from the input 16:00, 18:00', 24);
-// 16:00
+extractTime('extracts multiple times located anywhere within the input: 16:00, 18:00', 24);
+// [{time: '16:00'}, {time: '18:00'}]
 
 extractTime('distinguish between the civilian 1:30 PM ...', 12);
-// 13:30
+// [{time: '13:30'}]
 
 extractTime('... and military time formats 13:30', 24);
-// 13:30
+// [{time: '13:30'}]
 
 ```
 
@@ -48,10 +48,17 @@ extractTime('... and military time formats 13:30', 24);
 type TimeFormatType = 12 | 24;
 
 /**
+ * @property time 24-hour military time.
+ */
+type TimeMatchType = {|
+  +time: string
+|};
+
+/**
  * @param subject Arbitrary text input.
  * @param timeFormat Expected time format (12-hour am-pm clock or 24-hour military time).
  */
-type extractTime = (subject: string, timeFormat: TimeFormatType) => string | null;
+type extractTime = (subject: string, timeFormat: TimeFormatType) => $ReadOnlyArray<TimeMatchType>;
 
 ```
 
