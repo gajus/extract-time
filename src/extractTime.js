@@ -8,13 +8,20 @@ import splitToWords from './splitToWords';
 import createFormats from './createFormats';
 import Logger from './Logger';
 
+/**
+ * @property time 24-hour military time.
+ */
+type TimeMatchType = {|
+  +time: string
+|};
+
 type TimeFormatType = 12 | 24;
 
 const log = Logger.child({
   namespace: 'extractTime'
 });
 
-export default (subject: string, timeFormat: TimeFormatType): string | null => {
+export default (subject: string, timeFormat: TimeFormatType): $ReadOnlyArray<TimeMatchType> => {
   if (timeFormat !== 12 && timeFormat !== 24) {
     throw new Error('Unexpected time format value. Must be 12 or 24.');
   }
@@ -23,12 +30,18 @@ export default (subject: string, timeFormat: TimeFormatType): string | null => {
 
   const formats = createFormats();
 
-  const words = splitToWords(subject);
+  let words = splitToWords(subject);
+
+  const matches = [];
 
   for (const format of formats) {
     const movingChunks = createMovingChunks(words, format.wordCount);
 
+    let chunkIndex = 0;
+
     for (const movingChunk of movingChunks) {
+      chunkIndex++;
+
       const input = movingChunk.join(' ');
 
       log.trace('testing "%s" input using "%s" moment format', input, format.momentFormat);
@@ -49,9 +62,13 @@ export default (subject: string, timeFormat: TimeFormatType): string | null => {
         continue;
       }
 
-      return date.format('HH:mm');
+      words = words.slice(chunkIndex);
+
+      matches.push({
+        time: date.format('HH:mm')
+      });
     }
   }
 
-  return null;
+  return matches;
 };

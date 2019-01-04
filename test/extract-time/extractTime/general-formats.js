@@ -47,7 +47,8 @@ for (const subject of subjects) {
     const actual = extractTime(subject.input, subject.timeFormat);
     const expected = subject.date;
 
-    t.is(actual, expected);
+    t.true(actual.length === 1);
+    t.true(actual[0].time === expected);
   });
 
   // eslint-disable-next-line no-loop-func
@@ -57,6 +58,7 @@ for (const subject of subjects) {
     const actual = extractTime('foo ' + subject.input + ' bar', subject.timeFormat);
     const expected = subject.date;
 
-    t.is(actual, expected);
+    t.true(actual.length === 1);
+    t.true(actual[0].time === expected);
   });
 }
