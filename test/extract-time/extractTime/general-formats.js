@@ -6,8 +6,8 @@ import test, {
 } from 'ava';
 import sinon from 'sinon';
 import moment from 'moment';
-import extractTime from '../../src/extractTime';
-import createFormats from '../../src/createFormats';
+import extractTime from '../../../src/extractTime';
+import createFormats from '../../../src/createFormats';
 
 let clock;
 

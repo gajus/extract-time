@@ -1,7 +1,7 @@
 // @flow
 
 import test from 'ava';
-import extractTime from '../../src/extractTime';
+import extractTime from '../../../src/extractTime';
 
 test('throws an error if invalid format is provided', (t) => {
   t.throws(() => {

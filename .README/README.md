@@ -49,3 +49,4 @@ type extractTime = (subject: string, timeFormat: TimeFormatType) => string | nul
 ## Related projects
 
 * [`extract-date`](https://github.com/gajus/extract-date) – Extracts date from an arbitrary text input.
+* [`extract-price`](https://github.com/gajus/extract-price) – Extracts price from an arbitrary text input.
