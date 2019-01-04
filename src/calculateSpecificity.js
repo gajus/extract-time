@@ -4,13 +4,13 @@ export default (momentFormat: string): number => {
   let specificity = 0;
 
   if (momentFormat.toLowerCase().includes('a')) {
-    specificity += 40;
+    specificity += 50;
   }
 
   if (momentFormat.toLowerCase().includes('hh')) {
     specificity += 40;
   } else if (momentFormat.toLowerCase().includes('h')) {
-    specificity += 40;
+    specificity += 30;
   }
 
   if (momentFormat.includes('mm')) {

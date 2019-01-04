@@ -18,10 +18,26 @@ afterEach(() => {
   clock.restore();
 });
 
-test('extracts multiple times', (t) => {
+test('extracts multiple times (1 word format)', (t) => {
   clock.tick(moment('2000-06-01 16:00').valueOf());
 
   const actual = extractTime(moment().format('HH:mm') + ' ' + moment().add(1, 'hour').format('HH:mm'), 24);
+  const expected = [
+    {
+      time: moment().format('HH:mm')
+    },
+    {
+      time: moment().add(1, 'hour').format('HH:mm')
+    }
+  ];
+
+  t.deepEqual(actual, expected);
+});
+
+test('extracts multiple times (2 words format)', (t) => {
+  clock.tick(moment('2000-06-01 16:00').valueOf());
+
+  const actual = extractTime(moment().format('hh:mm a') + ' ' + moment().add(1, 'hour').format('hh:mm a'), 12);
   const expected = [
     {
       time: moment().format('HH:mm')
