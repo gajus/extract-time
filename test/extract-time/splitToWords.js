@@ -54,3 +54,17 @@ test('does not split characters connected using dashes (-)', (t) => {
     'foo-bar-baz'
   ]);
 });
+
+test('splits numbers separated by T', (t) => {
+  t.deepEqual(splitToWords('123T456'), [
+    '123',
+    '456'
+  ]);
+});
+
+test('splits numbers separated by +', (t) => {
+  t.deepEqual(splitToWords('123+456'), [
+    '123',
+    '456'
+  ]);
+});
