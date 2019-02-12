@@ -4,33 +4,27 @@
 
 import moment from 'moment';
 import createMovingChunks from './createMovingChunks';
-import splitToWords from './splitToWords';
+import normalizeInput from './normalizeInput';
 import createFormats from './createFormats';
 import Logger from './Logger';
-
-/**
- * @property time 24-hour military time.
- */
-type TimeMatchType = {|
-  +time: string
-|};
-
-type TimeFormatType = 12 | 24;
+import type {
+  TimeMatchType
+} from './types';
 
 const log = Logger.child({
   namespace: 'extractTime'
 });
 
-export default (subject: string, timeFormat: TimeFormatType): $ReadOnlyArray<TimeMatchType> => {
-  if (timeFormat !== 12 && timeFormat !== 24) {
-    throw new Error('Unexpected time format value. Must be 12 or 24.');
-  }
+export default (input: string): $ReadOnlyArray<TimeMatchType> => {
+  log.debug('attempting to extract date from "%s" input', input);
 
-  log.debug('attempting to extract date from "%s" input using %d time format', subject, timeFormat);
+  const normalizedInput = normalizeInput(input);
+
+  log.debug('normalized input to "%s"', normalizedInput);
 
   const formats = createFormats();
 
-  let words = splitToWords(subject);
+  let words = normalizedInput.split(' ');
 
   const matches = [];
 
@@ -42,23 +36,13 @@ export default (subject: string, timeFormat: TimeFormatType): $ReadOnlyArray<Tim
     for (const movingChunk of movingChunks) {
       chunkIndex++;
 
-      const input = movingChunk.join(' ');
+      const subject = movingChunk.join(' ');
 
-      log.trace('testing "%s" input using "%s" moment format', input, format.momentFormat);
+      log.trace('testing "%s" using "%s" moment format', subject, format.momentFormat);
 
-      const date = moment(input, format.momentFormat, true);
+      const date = moment(subject, format.momentFormat, true);
 
       if (!date.isValid()) {
-        continue;
-      }
-
-      if (format.timeFormat && format.timeFormat !== timeFormat) {
-        continue;
-      }
-
-      if (format.timeFormat && !timeFormat) {
-        log.info('found a match using "%s" moment format; unsafe to use without `timeFormat` configuration', format.momentFormat);
-
         continue;
       }
 

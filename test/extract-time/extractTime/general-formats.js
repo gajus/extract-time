@@ -44,7 +44,7 @@ for (const subject of subjects) {
   test('extracts ' + subject.momentFormat + ' from "' + subject.momentFormat + '" input using ' + subject.timeFormat + ' time format', (t) => {
     clock.tick(moment('2000-06-01 16:00').valueOf());
 
-    const actual = extractTime(subject.input, subject.timeFormat);
+    const actual = extractTime(subject.input);
     const expected = subject.date;
 
     t.true(actual.length === 1);
@@ -55,7 +55,7 @@ for (const subject of subjects) {
   test('extracts ' + subject.momentFormat + ' from "%w' + subject.momentFormat + '%w" input using ' + subject.timeFormat + ' time format', (t) => {
     clock.tick(moment('2000-06-01 16:00').valueOf());
 
-    const actual = extractTime('foo ' + subject.input + ' bar', subject.timeFormat);
+    const actual = extractTime('foo ' + subject.input + ' bar');
     const expected = subject.date;
 
     t.true(actual.length === 1);

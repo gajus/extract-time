@@ -35,6 +35,10 @@ h:ma
 h:mA
 h.ma
 h.mA
+hha
+hhA
+ha
+hA
 HH:mm:ss
 HH:mm
 HH.mm

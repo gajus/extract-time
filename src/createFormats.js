@@ -20,6 +20,7 @@ const militaryTimeFormats = [
   ])
     .map((combination) => {
       return {
+        militaryTime: true,
         momentFormat: combination.join(''),
         timeFormat: 24
       };
@@ -51,6 +52,27 @@ const civilianTimeFormats = [
   ])
     .map((combination) => {
       return {
+        militaryTime: false,
+        momentFormat: combination.join(''),
+        timeFormat: 12
+      };
+    })
+];
+
+const civilianTimeFormatsWithoutMinutes = [
+  ...cartesian([
+    [
+      'hh',
+      'h'
+    ],
+    [
+      'A',
+      'a'
+    ]
+  ])
+    .map((combination) => {
+      return {
+        militaryTime: false,
         momentFormat: combination.join(''),
         timeFormat: 12
       };
@@ -61,11 +83,13 @@ export default () => {
   return [
     // HH.mm.ss is unsafe because it can be confused with date format.
     {
+      militaryTime: true,
       momentFormat: 'HH:mm:ss',
       timeFormat: 24
     },
     ...militaryTimeFormats,
-    ...civilianTimeFormats
+    ...civilianTimeFormats,
+    ...civilianTimeFormatsWithoutMinutes
   ]
     .map((format) => {
       return {
