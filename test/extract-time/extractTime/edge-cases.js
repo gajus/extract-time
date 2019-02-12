@@ -26,3 +26,7 @@ test('extracts time from HH:mm:ssZ', (t) => {
     }
   ]);
 });
+
+test('does not extract time from a concatenation of time-like fragments longer than 3', (t) => {
+  t.deepEqual(extractTime('14:00:00:00'), []);
+});

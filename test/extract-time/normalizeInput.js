@@ -12,5 +12,10 @@ test('removes date from YYYY-MM-DDTHH:mm', (t) => {
 });
 
 test('removes seconds', (t) => {
+  t.true(normalizeInput('14:00:00') === '14:00');
   t.true(normalizeInput('14:00:00 15:00:00') === '14:00 15:00');
+});
+
+test('does not extract time from a concatenation of time-like fragments longer than 3', (t) => {
+  t.true(normalizeInput('14:00:00:00') === '14:00:00:00');
 });
