@@ -59,6 +59,11 @@ const civilianTimeFormats = [
 
 export default () => {
   return [
+    // HH.mm.ss is unsafe because it can be confused with date format.
+    {
+      momentFormat: 'HH:mm:ss',
+      timeFormat: 24
+    },
     ...militaryTimeFormats,
     ...civilianTimeFormats
   ]

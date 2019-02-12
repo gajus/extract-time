@@ -35,6 +35,7 @@ h:ma
 h:mA
 h.ma
 h.mA
+HH:mm:ss
 HH:mm
 HH.mm
 H:mm
