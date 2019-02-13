@@ -14,6 +14,9 @@ export default (input: string): string => {
 
       // Remove seconds.
       .replace(/([^:]|^)(\d{2}:\d{2}):\d{2}(?:[^:]|$)/g, '$1$2 ')
+
+      // Bring French times together
+      .replace(/(\d+)\s?h\s?(\d+)/i, '$1:$2')
       .replace(/,/g, ' ')
       .replace(/[.:;] /g, ' ')
       .replace(/\s+/g, ' ')
