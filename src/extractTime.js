@@ -38,13 +38,13 @@ export default (input: string): $ReadOnlyArray<TimeMatchType> => {
 
       const subject = movingChunk.join(' ');
 
-      log.trace('testing "%s" using "%s" moment format', subject, format.momentFormat);
-
       const date = moment(subject, format.momentFormat, true);
 
       if (!date.isValid()) {
         continue;
       }
+
+      log.debug('matched "%s" using "%s" moment format', subject, format.momentFormat);
 
       words = words.slice(chunkIndex);
 
