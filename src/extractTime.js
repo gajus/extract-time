@@ -8,11 +8,11 @@ import normalizeInput from './normalizeInput';
 import createFormats from './createFormats';
 import Logger from './Logger';
 import type {
-  TimeMatchType
+  TimeMatchType,
 } from './types';
 
 const log = Logger.child({
-  namespace: 'extractTime'
+  namespace: 'extractTime',
 });
 
 export default (input: string): $ReadOnlyArray<TimeMatchType> => {
@@ -49,7 +49,7 @@ export default (input: string): $ReadOnlyArray<TimeMatchType> => {
       words = words.slice(chunkIndex);
 
       matches.push({
-        time: date.format('HH:mm')
+        time: date.format('HH:mm'),
       });
     }
   }

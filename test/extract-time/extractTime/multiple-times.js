@@ -2,7 +2,7 @@
 
 import test, {
   afterEach,
-  beforeEach
+  beforeEach,
 } from 'ava';
 import sinon from 'sinon';
 import moment from 'moment';
@@ -24,11 +24,11 @@ test('extracts multiple times (1 word format)', (t) => {
   const actual = extractTime(moment().format('HH:mm') + ' ' + moment().add(1, 'hour').format('HH:mm'));
   const expected = [
     {
-      time: moment().format('HH:mm')
+      time: moment().format('HH:mm'),
     },
     {
-      time: moment().add(1, 'hour').format('HH:mm')
-    }
+      time: moment().add(1, 'hour').format('HH:mm'),
+    },
   ];
 
   t.deepEqual(actual, expected);
@@ -40,11 +40,11 @@ test('extracts multiple times (2 words format)', (t) => {
   const actual = extractTime(moment().format('hh:mm a') + ' ' + moment().add(1, 'hour').format('hh:mm a'));
   const expected = [
     {
-      time: moment().format('HH:mm')
+      time: moment().format('HH:mm'),
     },
     {
-      time: moment().add(1, 'hour').format('HH:mm')
-    }
+      time: moment().add(1, 'hour').format('HH:mm'),
+    },
   ];
 
   t.deepEqual(actual, expected);
@@ -56,11 +56,11 @@ test('extracts multiple times (2 words format) + noise', (t) => {
   const actual = extractTime('foo bar ' + moment().format('hh:mm a') + ' baz ' + moment().add(1, 'hour').format('hh:mm a'));
   const expected = [
     {
-      time: moment().format('HH:mm')
+      time: moment().format('HH:mm'),
     },
     {
-      time: moment().add(1, 'hour').format('HH:mm')
-    }
+      time: moment().add(1, 'hour').format('HH:mm'),
+    },
   ];
 
   t.deepEqual(actual, expected);

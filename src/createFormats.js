@@ -7,76 +7,76 @@ const militaryTimeFormats = [
   ...cartesian([
     [
       'HH',
-      'H'
+      'H',
     ],
     [
       ':',
-      '.'
+      '.',
     ],
     [
       'mm',
-      'm'
-    ]
+      'm',
+    ],
   ])
     .map((combination) => {
       return {
         militaryTime: true,
         momentFormat: combination.join(''),
-        timeFormat: 24
+        timeFormat: 24,
       };
-    })
+    }),
 ];
 
 const civilianTimeFormats = [
   ...cartesian([
     [
       'hh',
-      'h'
+      'h',
     ],
     [
       ':',
-      '.'
+      '.',
     ],
     [
       'mm',
-      'm'
+      'm',
     ],
     [
       '',
-      ' '
+      ' ',
     ],
     [
       'A',
-      'a'
-    ]
+      'a',
+    ],
   ])
     .map((combination) => {
       return {
         militaryTime: false,
         momentFormat: combination.join(''),
-        timeFormat: 12
+        timeFormat: 12,
       };
-    })
+    }),
 ];
 
 const civilianTimeFormatsWithoutMinutes = [
   ...cartesian([
     [
       'hh',
-      'h'
+      'h',
     ],
     [
       'A',
-      'a'
-    ]
+      'a',
+    ],
   ])
     .map((combination) => {
       return {
         militaryTime: false,
         momentFormat: combination.join(''),
-        timeFormat: 12
+        timeFormat: 12,
       };
-    })
+    }),
 ];
 
 export default () => {
@@ -85,17 +85,17 @@ export default () => {
     {
       militaryTime: true,
       momentFormat: 'HH:mm:ss',
-      timeFormat: 24
+      timeFormat: 24,
     },
     ...militaryTimeFormats,
     ...civilianTimeFormats,
-    ...civilianTimeFormatsWithoutMinutes
+    ...civilianTimeFormatsWithoutMinutes,
   ]
     .map((format) => {
       return {
         specificity: calculateSpecificity(format.momentFormat),
         wordCount: format.momentFormat.replace(/[^ ]/g, '').length + 1,
-        ...format
+        ...format,
       };
     })
     .sort((a, b) => {

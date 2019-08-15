@@ -2,7 +2,7 @@
 
 import test, {
   afterEach,
-  beforeEach
+  beforeEach,
 } from 'ava';
 import sinon from 'sinon';
 import moment from 'moment';
@@ -35,7 +35,7 @@ const subjects = formats
       date: currentDate.format('HH:mm'),
       input: currentDate.format(format.momentFormat),
       momentFormat: format.momentFormat,
-      timeFormat: format.timeFormat
+      timeFormat: format.timeFormat,
     };
   });
 
