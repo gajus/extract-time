@@ -15,14 +15,14 @@ const log = Logger.child({
   namespace: 'extractTime',
 });
 
+const formats = createFormats();
+
 export default (input: string): $ReadOnlyArray<TimeMatchType> => {
   log.debug('attempting to extract date from "%s" input', input);
 
   const normalizedInput = normalizeInput(input);
 
   log.debug('normalized input to "%s"', normalizedInput);
-
-  const formats = createFormats();
 
   let words = normalizedInput.split(' ');
 
