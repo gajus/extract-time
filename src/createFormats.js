@@ -20,8 +20,8 @@ const militaryTimeFormats = [
   ])
     .map((combination) => {
       return {
+        dateFnsFormat: combination.join(''),
         militaryTime: true,
-        momentFormat: combination.join(''),
         timeFormat: 24,
       };
     }),
@@ -46,14 +46,13 @@ const civilianTimeFormats = [
       ' ',
     ],
     [
-      'A',
       'a',
     ],
   ])
     .map((combination) => {
       return {
+        dateFnsFormat: combination.join(''),
         militaryTime: false,
-        momentFormat: combination.join(''),
         timeFormat: 12,
       };
     }),
@@ -66,14 +65,13 @@ const civilianTimeFormatsWithoutMinutes = [
       'h',
     ],
     [
-      'A',
       'a',
     ],
   ])
     .map((combination) => {
       return {
+        dateFnsFormat: combination.join(''),
         militaryTime: false,
-        momentFormat: combination.join(''),
         timeFormat: 12,
       };
     }),
@@ -83,8 +81,8 @@ export default () => {
   return [
     // HH.mm.ss is unsafe because it can be confused with date format.
     {
+      dateFnsFormat: 'HH:mm:ss',
       militaryTime: true,
-      momentFormat: 'HH:mm:ss',
       timeFormat: 24,
     },
     ...militaryTimeFormats,
@@ -93,14 +91,14 @@ export default () => {
   ]
     .map((format) => {
       return {
-        specificity: calculateSpecificity(format.momentFormat),
-        wordCount: format.momentFormat.replace(/[^ ]/g, '').length + 1,
+        specificity: calculateSpecificity(format.dateFnsFormat),
+        wordCount: format.dateFnsFormat.replace(/[^ ]/g, '').length + 1,
         ...format,
       };
     })
     .sort((a, b) => {
       if (b.specificity === a.specificity) {
-        return a.momentFormat.localeCompare(b.momentFormat);
+        return a.dateFnsFormat.localeCompare(b.dateFnsFormat);
       }
 
       return b.specificity - a.specificity;

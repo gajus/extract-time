@@ -3,7 +3,7 @@
 import test from 'ava';
 import extractTime from '../../../src/extractTime';
 
-test('extracts time from YYYY-MM-DDTHH:mm:ss', (t) => {
+test('extracts time from yyyy-MM-ddTHH:mm:ss', (t) => {
   t.deepEqual(extractTime('2019-02-12T14:00:00'), [
     {
       time: '14:00',

@@ -1,23 +1,23 @@
 // @flow
 
-export default (momentFormat: string): number => {
+export default (dateFnsFormat: string): number => {
   let specificity = 0;
 
-  if (momentFormat.toLowerCase().includes('a')) {
+  if (dateFnsFormat.toLowerCase().includes('a')) {
     specificity += 50;
   }
 
-  if (momentFormat.toLowerCase().includes('hh')) {
+  if (dateFnsFormat.toLowerCase().includes('hh')) {
     specificity += 40;
-  } else if (momentFormat.toLowerCase().includes('h')) {
+  } else if (dateFnsFormat.toLowerCase().includes('h')) {
     specificity += 30;
   }
 
-  if (momentFormat.includes('mm')) {
+  if (dateFnsFormat.includes('mm')) {
     specificity += 20;
-  } else if (momentFormat.includes('m')) {
+  } else if (dateFnsFormat.includes('m')) {
     specificity += 10;
   }
 
-  return specificity + momentFormat.length;
+  return specificity + dateFnsFormat.length;
 };

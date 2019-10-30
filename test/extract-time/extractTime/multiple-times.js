@@ -5,7 +5,11 @@ import test, {
   beforeEach,
 } from 'ava';
 import sinon from 'sinon';
-import moment from 'moment';
+import {
+  addHours,
+  format as formatDate,
+  parse as parseDate,
+} from 'date-fns';
 import extractTime from '../../../src/extractTime';
 
 let clock;
@@ -19,15 +23,15 @@ afterEach(() => {
 });
 
 test('extracts multiple times (1 word format)', (t) => {
-  clock.tick(moment('2000-06-01 16:00').valueOf());
+  clock.tick(parseDate('2000-06-01 16:00', 'yyyy-MM-dd HH:mm', new Date()).getTime());
 
-  const actual = extractTime(moment().format('HH:mm') + ' ' + moment().add(1, 'hour').format('HH:mm'));
+  const actual = extractTime(formatDate(new Date(), 'HH:mm') + ' ' + formatDate(addHours(new Date(), 1), 'HH:mm'));
   const expected = [
     {
-      time: moment().format('HH:mm'),
+      time: formatDate(new Date(), 'HH:mm'),
     },
     {
-      time: moment().add(1, 'hour').format('HH:mm'),
+      time: formatDate(addHours(new Date(), 1), 'HH:mm'),
     },
   ];
 
@@ -35,15 +39,15 @@ test('extracts multiple times (1 word format)', (t) => {
 });
 
 test('extracts multiple times (2 words format)', (t) => {
-  clock.tick(moment('2000-06-01 16:00').valueOf());
+  clock.tick(parseDate('2000-06-01 16:00', 'yyyy-MM-dd HH:mm', new Date()).getTime());
 
-  const actual = extractTime(moment().format('hh:mm a') + ' ' + moment().add(1, 'hour').format('hh:mm a'));
+  const actual = extractTime(formatDate(new Date(), 'hh:mm a') + ' ' + formatDate(addHours(new Date(), 1), 'hh:mm a'));
   const expected = [
     {
-      time: moment().format('HH:mm'),
+      time: formatDate(new Date(), 'HH:mm'),
     },
     {
-      time: moment().add(1, 'hour').format('HH:mm'),
+      time: formatDate(addHours(new Date(), 1), 'HH:mm'),
     },
   ];
 
@@ -51,15 +55,15 @@ test('extracts multiple times (2 words format)', (t) => {
 });
 
 test('extracts multiple times (2 words format) + noise', (t) => {
-  clock.tick(moment('2000-06-01 16:00').valueOf());
+  clock.tick(parseDate('2000-06-01 16:00', 'yyyy-MM-dd HH:mm', new Date()).getTime());
 
-  const actual = extractTime('foo bar ' + moment().format('hh:mm a') + ' baz ' + moment().add(1, 'hour').format('hh:mm a'));
+  const actual = extractTime('foo bar ' + formatDate(new Date(), 'hh:mm a') + ' baz ' + formatDate(addHours(new Date(), 1), 'hh:mm a'));
   const expected = [
     {
-      time: moment().format('HH:mm'),
+      time: formatDate(new Date(), 'HH:mm'),
     },
     {
-      time: moment().add(1, 'hour').format('HH:mm'),
+      time: formatDate(addHours(new Date(), 1), 'HH:mm'),
     },
   ];
 

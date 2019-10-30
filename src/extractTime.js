@@ -1,8 +1,10 @@
 // @flow
 
-/* eslint-disable no-continue */
-
-import moment from 'moment';
+import {
+  format as formatDate,
+  isValid as isDateValid,
+  parse as parseDate,
+} from 'date-fns';
 import createMovingChunks from './createMovingChunks';
 import normalizeInput from './normalizeInput';
 import createFormats from './createFormats';
@@ -38,18 +40,18 @@ export default (input: string): $ReadOnlyArray<TimeMatchType> => {
 
       const subject = movingChunk.join(' ');
 
-      const date = moment(subject, format.momentFormat, true);
+      const date = parseDate(subject, format.dateFnsFormat, new Date());
 
-      if (!date.isValid()) {
+      if (!isDateValid(date)) {
         continue;
       }
 
-      log.debug('matched "%s" using "%s" moment format', subject, format.momentFormat);
+      log.debug('matched "%s" using "%s" date-fns format', subject, format.dateFnsFormat);
 
       words = words.slice(chunkIndex);
 
       matches.push({
-        time: date.format('HH:mm'),
+        time: formatDate(date, 'HH:mm'),
       });
     }
   }

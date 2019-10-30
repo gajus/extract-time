@@ -5,7 +5,10 @@ import test, {
   beforeEach,
 } from 'ava';
 import sinon from 'sinon';
-import moment from 'moment';
+import {
+  format as formatDate,
+  parse as parseDate,
+} from 'date-fns';
 import extractTime from '../../../src/extractTime';
 import createFormats from '../../../src/createFormats';
 
@@ -27,22 +30,22 @@ const subjects = formats
   })
   .map((format) => {
     clock = sinon.useFakeTimers();
-    clock.tick(moment('2000-06-01 16:00').valueOf());
+    clock.tick(parseDate('2000-06-01 16:00', 'yyyy-MM-dd HH:mm', new Date()).getTime());
 
-    const currentDate = moment();
+    const currentDate = new Date();
 
     return {
-      date: currentDate.format('HH:mm'),
-      input: currentDate.format(format.momentFormat),
-      momentFormat: format.momentFormat,
+      date: formatDate(currentDate, 'HH:mm'),
+      dateFnsFormat: format.dateFnsFormat,
+      input: formatDate(currentDate, format.dateFnsFormat),
       timeFormat: format.timeFormat,
     };
   });
 
 for (const subject of subjects) {
   // eslint-disable-next-line no-loop-func
-  test('extracts ' + subject.momentFormat + ' from "' + subject.momentFormat + '" input using ' + subject.timeFormat + ' time format', (t) => {
-    clock.tick(moment('2000-06-01 16:00').valueOf());
+  test('extracts ' + subject.dateFnsFormat + ' from "' + subject.dateFnsFormat + '" input using ' + subject.timeFormat + ' time format', (t) => {
+    clock.tick(parseDate('2000-06-01 16:00', 'yyyy-MM-dd HH:mm', new Date()).getTime());
 
     const actual = extractTime(subject.input);
     const expected = subject.date;
@@ -52,8 +55,8 @@ for (const subject of subjects) {
   });
 
   // eslint-disable-next-line no-loop-func
-  test('extracts ' + subject.momentFormat + ' from "%w' + subject.momentFormat + '%w" input using ' + subject.timeFormat + ' time format', (t) => {
-    clock.tick(moment('2000-06-01 16:00').valueOf());
+  test('extracts ' + subject.dateFnsFormat + ' from "%w' + subject.dateFnsFormat + '%w" input using ' + subject.timeFormat + ' time format', (t) => {
+    clock.tick(parseDate('2000-06-01 16:00', 'yyyy-MM-dd HH:mm', new Date()).getTime());
 
     const actual = extractTime('foo ' + subject.input + ' bar');
     const expected = subject.date;
