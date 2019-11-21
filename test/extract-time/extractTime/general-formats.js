@@ -38,13 +38,13 @@ const subjects = formats
       date: formatDate(currentDate, 'HH:mm'),
       dateFnsFormat: format.dateFnsFormat,
       input: formatDate(currentDate, format.dateFnsFormat),
-      timeFormat: format.timeFormat,
+      timeNotation: format.timeNotation,
     };
   });
 
 for (const subject of subjects) {
   // eslint-disable-next-line no-loop-func
-  test('extracts ' + subject.dateFnsFormat + ' from "' + subject.dateFnsFormat + '" input using ' + subject.timeFormat + ' time format', (t) => {
+  test('extracts ' + subject.dateFnsFormat + ' from "' + subject.dateFnsFormat + '" input using ' + subject.timeNotation + ' time format', (t) => {
     clock.tick(parseDate('2000-06-01 16:00', 'yyyy-MM-dd HH:mm', new Date()).getTime());
 
     const actual = extractTime(subject.input);
@@ -55,7 +55,7 @@ for (const subject of subjects) {
   });
 
   // eslint-disable-next-line no-loop-func
-  test('extracts ' + subject.dateFnsFormat + ' from "%w' + subject.dateFnsFormat + '%w" input using ' + subject.timeFormat + ' time format', (t) => {
+  test('extracts ' + subject.dateFnsFormat + ' from "%w' + subject.dateFnsFormat + '%w" input using ' + subject.timeNotation + ' time format', (t) => {
     clock.tick(parseDate('2000-06-01 16:00', 'yyyy-MM-dd HH:mm', new Date()).getTime());
 
     const actual = extractTime('foo ' + subject.input + ' bar');

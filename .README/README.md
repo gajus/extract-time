@@ -31,11 +31,19 @@ extractTime('distinguish between the civilian 1:30 PM ...');
 extractTime('... and military time formats 13:30');
 // [{time: '13:30'}]
 
+extractTime('resolves ambiguous times using the provided time notation bias 1:30', 12);
+// [{time: '13:30'}]
+
 ```
 
 ## Signature
 
 ```js
+/**
+ * Indicates if time format is 12-hour or 24-hour clock notation.
+ */
+export type TimeNotationType = 12 | 24;
+
 /**
  * @property time 24-hour military time.
  */
@@ -46,7 +54,10 @@ type TimeMatchType = {|
 /**
  * @param subject Arbitrary text input.
  */
-type extractTime = (subject: string) => $ReadOnlyArray<TimeMatchType>;
+type extractTime = (
+  subject: string,
+  timeNotation: TimeNotationType,
+) => $ReadOnlyArray<TimeMatchType>;
 
 ```
 

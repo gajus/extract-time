@@ -2,6 +2,9 @@
 
 import cartesian from 'cartesian';
 import calculateSpecificity from './calculateSpecificity';
+import type {
+  TimeNotationType,
+} from './types';
 
 const militaryTimeFormats = [
   ...cartesian([
@@ -21,7 +24,7 @@ const militaryTimeFormats = [
     .map((combination) => {
       return {
         dateFnsFormat: combination.join(''),
-        timeFormat: 24,
+        timeNotation: 24,
       };
     }),
 ];
@@ -51,7 +54,30 @@ const civilianTimeFormats = [
     .map((combination) => {
       return {
         dateFnsFormat: combination.join(''),
-        timeFormat: 12,
+        timeNotation: 12,
+      };
+    }),
+];
+
+const unsafeCivilianTimeFormats = [
+  ...cartesian([
+    [
+      'hh',
+      'h',
+    ],
+    [
+      ':',
+      '.',
+    ],
+    [
+      'mm',
+      'm',
+    ],
+  ])
+    .map((combination) => {
+      return {
+        dateFnsFormat: combination.join(''),
+        timeNotation: 12,
       };
     }),
 ];
@@ -69,22 +95,42 @@ const civilianTimeFormatsWithoutMinutes = [
     .map((combination) => {
       return {
         dateFnsFormat: combination.join(''),
-        timeFormat: 12,
+        timeNotation: 12,
       };
     }),
 ];
 
-export default () => {
-  return [
-    // HH.mm.ss is unsafe because it can be confused with date format.
-    {
-      dateFnsFormat: 'HH:mm:ss',
-      timeFormat: 24,
-    },
-    ...militaryTimeFormats,
-    ...civilianTimeFormats,
-    ...civilianTimeFormatsWithoutMinutes,
-  ]
+export default (timeNotation: TimeNotationType | null = null) => {
+  let formats;
+
+  if (timeNotation === 12) {
+    formats = [
+      ...civilianTimeFormats,
+      ...unsafeCivilianTimeFormats,
+    ];
+  } else if (timeNotation === 24) {
+    formats = [
+      // HH.mm.ss is unsafe because it can be confused with date format (YY.MM.DD).
+      {
+        dateFnsFormat: 'HH:mm:ss',
+        timeNotation: 24,
+      },
+      ...militaryTimeFormats,
+    ];
+  } else {
+    formats = [
+      // HH.mm.ss is unsafe because it can be confused with date format (YY.MM.DD).
+      {
+        dateFnsFormat: 'HH:mm:ss',
+        timeNotation: 24,
+      },
+      ...militaryTimeFormats,
+      ...civilianTimeFormats,
+      ...civilianTimeFormatsWithoutMinutes,
+    ];
+  }
+
+  return formats
     .map((format) => {
       return {
         specificity: calculateSpecificity(format.dateFnsFormat),

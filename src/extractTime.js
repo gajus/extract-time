@@ -11,15 +11,16 @@ import createFormats from './createFormats';
 import Logger from './Logger';
 import type {
   TimeMatchType,
+  TimeNotationType,
 } from './types';
 
 const log = Logger.child({
   namespace: 'extractTime',
 });
 
-const formats = createFormats();
+export default (input: string, timeNotation: TimeNotationType | null = null): $ReadOnlyArray<TimeMatchType> => {
+  const formats = createFormats(timeNotation);
 
-export default (input: string): $ReadOnlyArray<TimeMatchType> => {
   log.debug('attempting to extract date from "%s" input', input);
 
   const normalizedInput = normalizeInput(input);
