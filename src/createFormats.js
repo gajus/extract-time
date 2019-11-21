@@ -21,7 +21,6 @@ const militaryTimeFormats = [
     .map((combination) => {
       return {
         dateFnsFormat: combination.join(''),
-        militaryTime: true,
         timeFormat: 24,
       };
     }),
@@ -52,7 +51,6 @@ const civilianTimeFormats = [
     .map((combination) => {
       return {
         dateFnsFormat: combination.join(''),
-        militaryTime: false,
         timeFormat: 12,
       };
     }),
@@ -71,7 +69,6 @@ const civilianTimeFormatsWithoutMinutes = [
     .map((combination) => {
       return {
         dateFnsFormat: combination.join(''),
-        militaryTime: false,
         timeFormat: 12,
       };
     }),
@@ -82,7 +79,6 @@ export default () => {
     // HH.mm.ss is unsafe because it can be confused with date format.
     {
       dateFnsFormat: 'HH:mm:ss',
-      militaryTime: true,
       timeFormat: 24,
     },
     ...militaryTimeFormats,
