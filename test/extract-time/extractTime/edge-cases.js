@@ -75,3 +75,12 @@ test('resolves times using specific time notation (24)', (t) => {
     },
   ]);
 });
+
+// @see https://stackoverflow.com/a/13060823/368691
+test('interprets 24:00 as 00:00', (t) => {
+  t.deepEqual(extractTime('24:00'), [
+    {
+      time: '00:00',
+    },
+  ]);
+});

@@ -46,7 +46,11 @@ export default (input: string, timeNotation: TimeNotationType | null = null): $R
     for (const movingChunk of movingChunks) {
       chunkIndex++;
 
-      const subject = movingChunk.join(' ');
+      let subject = movingChunk.join(' ');
+
+      if (format.normalizeInput) {
+        subject = format.normalizeInput(subject);
+      }
 
       const date = parseDate(subject, format.dateFnsFormat, baseDate);
 

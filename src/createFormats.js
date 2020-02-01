@@ -24,6 +24,9 @@ const militaryTimeFormats = [
     .map((combination) => {
       return {
         dateFnsFormat: combination.join(''),
+        normalizeInput: (input) => {
+          return input === '24:00' ? '00:00' : input;
+        },
         timeNotation: 24,
       };
     }),
