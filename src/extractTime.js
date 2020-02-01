@@ -31,6 +31,13 @@ export default (input: string, timeNotation: TimeNotationType | null = null): $R
 
   const matches = [];
 
+  // Assume that it is past midday.
+  // This is relevant when parsing civilian times such as '1:30'.
+  // Without being explicit about the base time being after midday,
+  // the above time would be interpreted either as '1:30' (military time)
+  // or '13:30' depending on the time of the day when the data is parsed.
+  const baseDate = parseDate('12:00', 'HH:mm', new Date());
+
   for (const format of formats) {
     const movingChunks = createMovingChunks(words, format.wordCount);
 
@@ -41,7 +48,7 @@ export default (input: string, timeNotation: TimeNotationType | null = null): $R
 
       const subject = movingChunk.join(' ');
 
-      const date = parseDate(subject, format.dateFnsFormat, new Date());
+      const date = parseDate(subject, format.dateFnsFormat, baseDate);
 
       if (!isDateValid(date)) {
         continue;
